@@ -13,7 +13,7 @@ object BaseExample {
   def newState(p: State, c: State, n: State): State =
     if (p == ALIVE && c == ALIVE && n == ALIVE) ALIVE else DEAD
 
-  def next(board: List[Cell]) = {
+  def next(board: List[List[Cell]]): List[List[Cell]] = {
     def nextRec(previous: State, board: List[Cell]): List[Cell] = {
       board match {
         case h :: ht :: t => Cell(newState(previous, h.state, ht.state)) +: nextRec(h.state, ht :: t)
@@ -22,11 +22,7 @@ object BaseExample {
       }
     }
 
-    nextRec(DEAD, board)
-//    if (board.length == 3 && board(0).state == ALIVE && board(1).state == ALIVE)
-//      List(Cell(DEAD), Cell(ALIVE), Cell(DEAD))
-//    else
-//      for (c <- board) yield Cell(DEAD)
+    List(nextRec(DEAD, board(0)))
   }
 
 
