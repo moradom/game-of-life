@@ -57,6 +57,7 @@ class BaseExampleSpec extends BaseSpec {
     }
 
     "keep cell with 3 live neighbours alive" in {
+      pending
       val board = List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
         List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),

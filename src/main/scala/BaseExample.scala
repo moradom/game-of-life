@@ -4,28 +4,27 @@ object State extends Enumeration {
 }
 import State._
 
+case class Cell(state: State) {
+  def this(p: State, c: State, n: State) =
+    this(if (p == ALIVE && c == ALIVE && n == ALIVE) ALIVE else DEAD)
+}
+
+object Cell {
+  def apply(p: State, c: State, n: State) = new Cell(p, c, n)
+}
+
 object BaseExample {
 
   def awake(cell: Cell) = cell.copy(state = ALIVE)
 
   def kill(cell: Cell) = Cell(DEAD)
 
-  def newState(p: State, c: State, n: State): State =
-    if (p == ALIVE && c == ALIVE && n == ALIVE) ALIVE else DEAD
-
   def next(board: List[List[Cell]]): List[List[Cell]] = {
-    def nextRec(previous: State, board: List[Cell]): List[Cell] = {
-      board match {
-        case h :: ht :: t => Cell(newState(previous, h.state, ht.state)) +: nextRec(h.state, ht :: t)
-        case h :: Nil => List(Cell(DEAD))
-        case _ => List.empty
-      }
-    }
-
-    List(nextRec(DEAD, board(0)))
+    List(
+      (Cell(DEAD) +:
+      (for (i <- 1 to board(0).length-2)
+        yield Cell(board(0)(i-1).state, board(0)(i).state, board(0)(i+1).state)).toList) :+
+      Cell(DEAD))
   }
-
-
 }
 
-case class Cell(state: State)
