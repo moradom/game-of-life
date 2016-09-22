@@ -20,11 +20,15 @@ object BaseExample {
   def kill(cell: Cell) = Cell(DEAD)
 
   def next(board: List[List[Cell]]): List[List[Cell]] = {
-    List(
-      (Cell(DEAD) +:
-      (for (i <- 1 to board(0).length-2)
-        yield Cell(board(0)(i-1).state, board(0)(i).state, board(0)(i+1).state)).toList) :+
-      Cell(DEAD))
+
+    if (board(0).length == 1)
+      List(List(Cell(DEAD)))
+    else
+      List(
+        (Cell(DEAD) +:
+        (for (i <- 1 to board(0).length-2)
+          yield Cell(board(0)(i-1).state, board(0)(i).state, board(0)(i+1).state)).toList) :+
+        Cell(DEAD))
   }
 }
 

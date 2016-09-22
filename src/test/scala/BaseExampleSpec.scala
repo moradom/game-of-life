@@ -32,7 +32,15 @@ class BaseExampleSpec extends BaseSpec {
 
         val result = next(board)
 
-        result(0)(0).state shouldBe DEAD
+        result shouldBe List(List(Cell(DEAD)))
+      }
+
+      "there is only 2 live cells" in {
+        val board = List(List(Cell(ALIVE), Cell(ALIVE)))
+
+        val result = next(board)
+
+        result shouldBe List(List(Cell(DEAD), Cell(DEAD)))
       }
 
       "the live cell is between dead ones" in {
