@@ -24,11 +24,10 @@ object Cell {
 
 }
 
-case class Board() {
+case class Board(var board: Vector[Vector[Cell]] = Vector.empty) {
 
-  protected var lin: Int = 0
-  protected var col: Int = 0
-  protected var board: Vector[Vector[Cell]] = Vector.empty
+  protected var lin: Int = board.size
+  protected var col: Int = if (board.isEmpty) 0 else board(0).size
 
   def this(linIn: Int, colIn: Int) = {
     this()
