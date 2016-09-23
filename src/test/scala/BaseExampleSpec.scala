@@ -7,11 +7,11 @@ class BaseExampleSpec extends BaseSpec {
 
   "awake" should {
     "make a cell alive" in {
-      val dead = Cell(DEAD)
+      val dead = Cell()
 
       val result = dead.awake
 
-      result.state shouldBe ALIVE
+      result.isAlive shouldBe true
     }
   }
 
@@ -21,7 +21,7 @@ class BaseExampleSpec extends BaseSpec {
 
       val result = alive.kill
 
-      result.state shouldBe DEAD
+      result.isAlive shouldBe false
     }
   }
 
@@ -32,7 +32,7 @@ class BaseExampleSpec extends BaseSpec {
 
         val result = cell.next(0)
 
-        result shouldBe Cell(DEAD)
+        result.isAlive shouldBe false
       }
 
       "there is 1 live neighbour" in {
@@ -40,7 +40,7 @@ class BaseExampleSpec extends BaseSpec {
 
         val result = cell.next(1)
 
-        result shouldBe Cell(DEAD)
+        result.isAlive shouldBe false
       }
 
       "there are more than 3 live neighbours" in {
@@ -48,7 +48,7 @@ class BaseExampleSpec extends BaseSpec {
 
         val result = cell.next(4)
 
-        result shouldBe Cell(DEAD)
+        result.isAlive shouldBe false
       }
     }
 
@@ -58,7 +58,7 @@ class BaseExampleSpec extends BaseSpec {
 
         val result = cell.next(2)
 
-        result shouldBe Cell(ALIVE)
+        result.isAlive shouldBe true
       }
 
       "there are 3 live neighbours" in {
@@ -66,35 +66,35 @@ class BaseExampleSpec extends BaseSpec {
 
         val result = cell.next(3)
 
-        result shouldBe Cell(ALIVE)
+        result.isAlive shouldBe true
       }
     }
 
     "awake cell" when {
       "there are exactly 3 live neighbours" in {
-        val cell = Cell(DEAD)
+        val cell = Cell()
 
         val result = cell.next(3)
 
-        result shouldBe Cell(ALIVE)
+        result.isAlive shouldBe true
       }
     }
 
     "keep cell dead" when {
       "there are 2 live neighbours" in {
-        val cell = Cell(DEAD)
+        val cell = Cell()
 
         val result = cell.next(2)
 
-        result shouldBe Cell(DEAD)
+        result.isAlive shouldBe false
       }
 
       "there are 4 live neighbours" in {
-        val cell = Cell(DEAD)
+        val cell = Cell()
 
         val result = cell.next(4)
 
-        result shouldBe Cell(DEAD)
+        result.isAlive shouldBe false
       }
     }
 

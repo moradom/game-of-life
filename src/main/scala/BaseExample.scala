@@ -5,23 +5,18 @@ object State extends Enumeration {
 import State._
 
 case class Cell(state: State = DEAD) {
-  def this(p: State, c: State, n: State) =
-    this(if (p == ALIVE && c == ALIVE && n == ALIVE) ALIVE else DEAD)
 
   def awake = this.copy(state = ALIVE)
 
-  def kill = Cell(DEAD)
+  def kill = Cell()
+
+  def isAlive = state == ALIVE
 
   def next(n: Int) =
-    if (state == ALIVE )
+    if (isAlive)
       if (n == 2 || n ==3) this else kill
     else
-      if (n == 3) awake else this
-}
-
-object Cell {
-  def apply(p: State, c: State, n: State) = new Cell(p, c, n)
-
+      if (n != 3) this else awake
 }
 
 case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
@@ -54,7 +49,7 @@ case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
   }
 
   def surroundingAlive(l: Int, c: Int) = {
-    surrounding(l, c) count(_.state == ALIVE)
+    surrounding(l, c) count(_.isAlive)
   }
 
   def next() = this.copy(board = nextBoard())
