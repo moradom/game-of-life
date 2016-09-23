@@ -33,6 +33,17 @@ class BaseExampleSpec extends BaseSpec {
 
       result shouldBe None
     }
+
+    "get a Cell when then indexes are inside the board" in {
+      val board = Board(List(
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
+        List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD))))
+
+      val result = board.get(1,1)
+
+      result shouldBe Some(Cell(ALIVE))
+    }
   }
 
 
