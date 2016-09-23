@@ -49,6 +49,11 @@ case class Board() {
       Some(board(l)(c))
   }
 
+  def surrounding(l: Int, c: Int) = {
+    (for (j <- l - 1 to l + 1; k <- c - 1 to c + 1 if ((l != j || c != k) && get(j, k).isDefined))
+      yield get(j, k)) map(_.get) toList
+  } 
+  
   def next() = Board(BaseExample.next(this.toList))
 
 }

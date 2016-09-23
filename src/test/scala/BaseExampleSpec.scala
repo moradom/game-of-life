@@ -47,6 +47,43 @@ class BaseExampleSpec extends BaseSpec {
   }
 
 
+  "get the surroundings of the Cell" should {
+    "return the complete 8 neighbors when the Cell is fully surrounded" in {
+      val board = Board(List(
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
+        List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD))))
+
+      val result = board.surrounding(1,1)
+
+      result shouldBe List.fill(8)(Cell())
+    }
+
+    "return the 5 neighbors when the Cell is on a border" in {
+      val board = Board(List(
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
+        List(Cell(DEAD), Cell(DEAD), Cell(ALIVE)),
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD))))
+
+      val result = board.surrounding(1,2)
+
+      result shouldBe List.fill(5)(Cell())
+    }
+
+    "return the 3 neighbors when the Cell is on a corner" in {
+      val board = Board(List(
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
+        List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
+        List(Cell(DEAD), Cell(DEAD), Cell(ALIVE))))
+
+      val result = board.surrounding(2,2)
+
+      result shouldBe List.fill(3)(Cell())
+    }
+
+  }
+
+
   "next" should {
     "kill cells with fewer than two live neighbours" when {
       "it is the only live cell" in {
