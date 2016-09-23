@@ -15,6 +15,8 @@ case class Cell(state: State = DEAD) {
   def next(n: Int) =
     if (state == ALIVE )
       if (n == 2 || n ==3) this else kill
+    else
+      this
 }
 
 object Cell {
