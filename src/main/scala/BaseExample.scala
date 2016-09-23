@@ -16,7 +16,7 @@ case class Cell(state: State = DEAD) {
     if (state == ALIVE )
       if (n == 2 || n ==3) this else kill
     else
-      this
+      if (n == 3) awake else this
 }
 
 object Cell {

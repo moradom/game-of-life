@@ -69,6 +69,17 @@ class BaseExampleSpec extends BaseSpec {
         result shouldBe Cell(ALIVE)
       }
     }
+
+    "awake cell" when {
+      "there are exactly 3 live neighbours" in {
+        val cell = Cell(DEAD)
+
+        val result = cell.next(3)
+
+        result shouldBe Cell(ALIVE)
+      }
+    }
+
   }
 
   "get cell from board" should {
