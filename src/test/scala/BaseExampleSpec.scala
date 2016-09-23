@@ -80,6 +80,25 @@ class BaseExampleSpec extends BaseSpec {
       }
     }
 
+    "keep cell dead" when {
+      "there are 2 live neighbours" in {
+        val cell = Cell(DEAD)
+
+        val result = cell.next(2)
+
+        result shouldBe Cell(DEAD)
+      }
+
+      "there are 4 live neighbours" in {
+        val cell = Cell(DEAD)
+
+        val result = cell.next(4)
+
+        result shouldBe Cell(DEAD)
+      }
+    }
+
+
   }
 
   "get cell from board" should {
