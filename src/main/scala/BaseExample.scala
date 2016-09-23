@@ -19,6 +19,7 @@ object Cell {
 }
 
 case class Board() {
+
   protected var lin: Int = 0
   protected var col: Int = 0
   protected var board: Vector[Vector[Cell]] = Vector.empty
@@ -39,6 +40,13 @@ case class Board() {
 
   def toList() = {
     board.toList.map(_.toList)
+  }
+
+  def get(l: Int, c: Int): Option[Cell] = {
+    if (l < 0 || l > lin-1 || c < 0 || c > col-1)
+      None
+    else
+      Some(board(l)(c))
   }
 
   def next() = Board(BaseExample.next(this.toList))
