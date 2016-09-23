@@ -24,7 +24,7 @@ object Cell {
 
 }
 
-case class Board(var board: Vector[Vector[Cell]] = Vector.empty) {
+case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
 
   protected var lin: Int = board.size
   protected var col: Int = if (board.isEmpty) 0 else board(0).size
