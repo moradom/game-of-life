@@ -30,20 +30,14 @@ case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
   protected var col: Int = if (board.isEmpty) 0 else board(0).size
 
   def this(linIn: Int, colIn: Int) = {
-    this()
-    lin = linIn
-    col = colIn
-    board = Vector.fill(lin, col)(Cell())
+    this(Vector.fill(linIn, colIn)(Cell()))
   }
 
   def this(list: List[List[Cell]]) = {
-    this()
-    lin = list.length
-    col = if (lin > 0) list.head.length else 0
-    board = list.toVector.map(_.toVector)
+    this(list.toVector.map(_.toVector))
   }
 
-  def toList() = {
+  def toList = {
     board.toList.map(_.toList)
   }
 
@@ -55,11 +49,23 @@ case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
   }
 
   def surrounding(l: Int, c: Int) = {
-    (for (j <- l - 1 to l + 1; k <- c - 1 to c + 1 if ((l != j || c != k) && get(j, k).isDefined))
-      yield get(j, k)) map(_.get) toList
-  } 
-  
-  def next() = Board(BaseExample.next(this.toList))
+    (for (j <- l - 1 to l + 1; k <- c - 1 to c + 1 if (l != j || c != k) && get(j, k).isDefined)
+      yield get(j, k).get).toList
+  }
+
+  def surroundingAlive(l: Int, c: Int) = {
+    surrounding(l, c) count(_.state == ALIVE)
+  }
+
+  def next() = this.copy(board = nextBoard())
+
+  protected def nextBoard() = {
+    (for (j <- 0 to lin - 1)
+      yield (for (k <- 0 to col - 1)
+        yield board(j)(k).next(surroundingAlive(j, k))).toVector)
+              .toVector
+  }
+
 
 }
 

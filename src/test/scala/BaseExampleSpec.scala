@@ -199,8 +199,7 @@ class BaseExampleSpec extends BaseSpec {
         Cell(DEAD), Cell(ALIVE), Cell(DEAD)))
     }
 
-    "keep cell with 3 live neighbours alive" in {
-      pending
+    "keep cell with 3 live neighbours alive and awake the dead ones with 3 alive neighbours" in {
       val board = Board(List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
         List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
@@ -210,8 +209,8 @@ class BaseExampleSpec extends BaseSpec {
 
       result.toList shouldBe List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
-        List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
-        List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)))
+        List(Cell(ALIVE), Cell(ALIVE), Cell(ALIVE)),
+        List(Cell(ALIVE), Cell(ALIVE), Cell(ALIVE)))
     }
   }
 
