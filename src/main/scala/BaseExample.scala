@@ -11,6 +11,10 @@ case class Cell(state: State = DEAD) {
   def awake() = this.copy(state = ALIVE)
 
   def kill() = Cell(DEAD)
+
+  def next(n: Int) =
+    if (state == ALIVE )
+      if (n == 2 || n ==3) this else kill
 }
 
 object Cell {

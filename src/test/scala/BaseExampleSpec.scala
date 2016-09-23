@@ -25,6 +25,44 @@ class BaseExampleSpec extends BaseSpec {
     }
   }
 
+  "cell next" should {
+    "kill alive cell" when {
+      "there are no live neighbours" in {
+        val cell = Cell(ALIVE)
+
+        val result = cell.next(0)
+
+        result shouldBe Cell(DEAD)
+      }
+
+      "there is 1 live neighbour" in {
+        val cell = Cell(ALIVE)
+
+        val result = cell.next(1)
+
+        result shouldBe Cell(DEAD)
+      }
+    }
+
+    "keep cell alive" when {
+      "there are 2 live neighbours" in {
+        val cell = Cell(ALIVE)
+
+        val result = cell.next(2)
+
+        result shouldBe Cell(ALIVE)
+      }
+
+      "there are 3 live neighbours" in {
+        val cell = Cell(ALIVE)
+
+        val result = cell.next(3)
+
+        result shouldBe Cell(ALIVE)
+      }
+    }
+  }
+
   "get cell from board" should {
     "get None when then indexes are outside the board (no wrap)" in {
       val board = Board(List(List(Cell(ALIVE))))
@@ -84,7 +122,7 @@ class BaseExampleSpec extends BaseSpec {
   }
 
 
-  "next" should {
+  "board next" should {
     "kill cells with fewer than two live neighbours" when {
       "it is the only live cell" in {
         val board = Board(List(List(Cell(ALIVE))))
