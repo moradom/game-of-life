@@ -9,7 +9,7 @@ class BaseExampleSpec extends BaseSpec {
     "make a cell alive" in {
       val dead = Cell(DEAD)
 
-      val result = awake(dead)
+      val result = dead.awake()
 
       result.state shouldBe ALIVE
     }
@@ -19,7 +19,7 @@ class BaseExampleSpec extends BaseSpec {
     "make a cell dead" in {
       val alive = Cell(ALIVE)
 
-      val result = kill(alive)
+      val result = alive.kill()
 
       result.state shouldBe DEAD
     }
@@ -28,37 +28,37 @@ class BaseExampleSpec extends BaseSpec {
   "next" should {
     "kill cells with fewer than two live neighbours" when {
       "it is the only live cell" in {
-        val board = List(List(Cell(ALIVE)))
+        val board = Board(List(List(Cell(ALIVE))))
 
-        val result = next(board)
+        val result = board.next()
 
-        result shouldBe List(List(Cell(DEAD)))
+        result.toList shouldBe List(List(Cell(DEAD)))
       }
 
       "there is only 2 live cells" in {
-        val board = List(List(Cell(ALIVE), Cell(ALIVE)))
+        val board = Board(List(List(Cell(ALIVE), Cell(ALIVE))))
 
-        val result = next(board)
+        val result = board.next()
 
-        result shouldBe List(List(Cell(DEAD), Cell(DEAD)))
+        result.toList shouldBe List(List(Cell(DEAD), Cell(DEAD)))
       }
 
       "the live cell is between dead ones" in {
-        val board = List(List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)))
+        val board = Board(List(List(Cell(DEAD), Cell(ALIVE), Cell(DEAD))))
 
-        val result = next(board)
+        val result = board.next()
 
-        result shouldBe List(List(Cell(DEAD), Cell(DEAD), Cell(DEAD)))
+        result.toList shouldBe List(List(Cell(DEAD), Cell(DEAD), Cell(DEAD)))
       }
     }
 
     "keep cells with 2 live neighbours alive" in {
-      val board = List(
-        List.fill(3)(Cell(ALIVE)) ++ List(Cell(DEAD)) ++ List.fill(3)(Cell(ALIVE)))
+      val board = Board(List(
+        List.fill(3)(Cell(ALIVE)) ++ List(Cell(DEAD)) ++ List.fill(3)(Cell(ALIVE))))
 
-      val result = next(board)
+      val result = board.next()
 
-      result shouldBe List(List(
+      result.toList shouldBe List(List(
         Cell(DEAD), Cell(ALIVE), Cell(DEAD),
         Cell(DEAD),
         Cell(DEAD), Cell(ALIVE), Cell(DEAD)))
@@ -66,14 +66,14 @@ class BaseExampleSpec extends BaseSpec {
 
     "keep cell with 3 live neighbours alive" in {
       pending
-      val board = List(
+      val board = Board(List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
         List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
-        List(Cell(ALIVE), Cell(ALIVE), Cell(ALIVE)))
+        List(Cell(ALIVE), Cell(ALIVE), Cell(ALIVE))))
 
-      val result = next(board)
+      val result = board.next()
 
-      result shouldBe List(
+      result.toList shouldBe List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
         List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
         List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)))
