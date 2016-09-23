@@ -8,9 +8,9 @@ case class Cell(state: State = DEAD) {
   def this(p: State, c: State, n: State) =
     this(if (p == ALIVE && c == ALIVE && n == ALIVE) ALIVE else DEAD)
 
-  def awake() = this.copy(state = ALIVE)
+  def awake = this.copy(state = ALIVE)
 
-  def kill() = Cell(DEAD)
+  def kill = Cell(DEAD)
 
   def next(n: Int) =
     if (state == ALIVE )
@@ -60,8 +60,8 @@ case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
   def next() = this.copy(board = nextBoard())
 
   protected def nextBoard() = {
-    (for (j <- 0 to lin - 1)
-      yield (for (k <- 0 to col - 1)
+    (for (j <- 0 until lin)
+      yield (for (k <- 0 until col)
         yield board(j)(k).next(surroundingAlive(j, k))).toVector)
               .toVector
   }
@@ -76,16 +76,5 @@ object Board {
 
 object BaseExample {
 
-  def next(board: List[List[Cell]]): List[List[Cell]] = {
-
-    if (board(0).length == 1)
-      List(List(Cell(DEAD)))
-    else
-      List(
-        (Cell(DEAD) +:
-        (for (i <- 1 to board(0).length-2)
-          yield Cell(board(0)(i-1).state, board(0)(i).state, board(0)(i+1).state)).toList) :+
-        Cell(DEAD))
-  }
 }
 

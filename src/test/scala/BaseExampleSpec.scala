@@ -9,7 +9,7 @@ class BaseExampleSpec extends BaseSpec {
     "make a cell alive" in {
       val dead = Cell(DEAD)
 
-      val result = dead.awake()
+      val result = dead.awake
 
       result.state shouldBe ALIVE
     }
@@ -19,7 +19,7 @@ class BaseExampleSpec extends BaseSpec {
     "make a cell dead" in {
       val alive = Cell(ALIVE)
 
-      val result = alive.kill()
+      val result = alive.kill
 
       result.state shouldBe DEAD
     }
