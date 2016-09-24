@@ -19,19 +19,11 @@ case class Cell(state: State = DEAD) {
       if (n != 3) this else awake
 }
 
-case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
+case class Board(protected val board: Vector[Vector[Cell]] = Vector.empty) {
 
-  protected var lin: Int = board.size
-  protected var col: Int = if (board.isEmpty) 0 else board(0).size
-
-  def this(linIn: Int, colIn: Int) = {
-    this(Vector.fill(linIn, colIn)(Cell()))
-  }
-
-  def this(list: List[List[Cell]]) = {
-    this(list.toVector.map(_.toVector))
-  }
-
+  protected val lin: Int = board.size
+  protected val col: Int = if (board.isEmpty) 0 else board(0).size
+  
   def toList = {
     board.toList.map(_.toList)
   }
@@ -74,8 +66,9 @@ case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
 }
 
 object Board {
-  def apply(linIn: Int, colIn: Int) = new Board(linIn, colIn)
-  def apply(list: List[List[Cell]]) = new Board(list)
+  def apply(linIn: Int, colIn: Int) = new Board(Vector.fill(linIn, colIn)(Cell()))
+
+  def apply(list: List[List[Cell]]) = new Board(list.toVector.map(_.toVector))
 }
 
 object BaseExample {
