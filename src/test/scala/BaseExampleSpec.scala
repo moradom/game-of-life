@@ -135,7 +135,7 @@ class BaseExampleSpec extends BaseSpec {
       result shouldBe List.fill(8)(Cell())
     }
 
-    "return the 5 neighbors when the Cell is on a border" in {
+    "return the 8 neighbors when the Cell is on a border" in {
       val board = Board(List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
         List(Cell(DEAD), Cell(DEAD), Cell(ALIVE)),
@@ -143,10 +143,10 @@ class BaseExampleSpec extends BaseSpec {
 
       val result = board.surrounding(1,2)
 
-      result shouldBe List.fill(5)(Cell())
+      result shouldBe List.fill(8)(Cell())
     }
 
-    "return the 3 neighbors when the Cell is on a corner" in {
+    "return the 8 neighbors when the Cell is on a corner" in {
       val board = Board(List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
@@ -154,7 +154,7 @@ class BaseExampleSpec extends BaseSpec {
 
       val result = board.surrounding(2,2)
 
-      result shouldBe List.fill(3)(Cell())
+      result shouldBe List.fill(8)(Cell())
     }
 
   }
@@ -194,9 +194,9 @@ class BaseExampleSpec extends BaseSpec {
       val result = board.next()
 
       result.toList shouldBe List(List(
-        Cell(DEAD), Cell(ALIVE), Cell(DEAD),
+        Cell(ALIVE), Cell(ALIVE), Cell(DEAD),
         Cell(DEAD),
-        Cell(DEAD), Cell(ALIVE), Cell(DEAD)))
+        Cell(DEAD), Cell(ALIVE), Cell(ALIVE)))
     }
 
     "keep cell with 3 live neighbours alive and awake the dead ones with 3 alive neighbours" in {
@@ -209,8 +209,19 @@ class BaseExampleSpec extends BaseSpec {
 
       result.toList shouldBe List(
         List(Cell(DEAD), Cell(DEAD), Cell(DEAD)),
-        List(Cell(ALIVE), Cell(ALIVE), Cell(ALIVE)),
+        List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
         List(Cell(ALIVE), Cell(ALIVE), Cell(ALIVE)))
+    }
+
+    "wipe dead all the board on a T shape" in {
+      val board = Board(List(
+        List(Cell(ALIVE), Cell(ALIVE), Cell(ALIVE)),
+        List(Cell(DEAD), Cell(ALIVE), Cell(DEAD)),
+        List(Cell(DEAD), Cell(ALIVE), Cell(DEAD))))
+
+      val result = board.next()
+
+      result.toList shouldBe Board(3,3).toList
     }
   }
 

@@ -37,10 +37,19 @@ case class Board(protected var board: Vector[Vector[Cell]] = Vector.empty) {
   }
 
   def get(l: Int, c: Int): Option[Cell] = {
-    if (l < 0 || l > lin-1 || c < 0 || c > col-1)
+    def wrap(i: Int, max: Int) = {
+      if ((i < 0 || i >= max) && max < 3)
+        None
+      else
+        if (i < 0) Some(max-1) else if (i == max) Some(0) else Some(i)
+    }
+
+    val lWrap = wrap(l, lin)
+    val cWrap = wrap(c, col)
+    if (lWrap.isEmpty || cWrap.isEmpty)
       None
     else
-      Some(board(l)(c))
+      Some(board(lWrap.get)(cWrap.get))
   }
 
   def surrounding(l: Int, c: Int) = {
